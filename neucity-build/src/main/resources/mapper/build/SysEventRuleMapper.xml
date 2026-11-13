@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neucity.build.mapper.SysEventRuleMapper">
+
+    <select id="selectEventRule" resultType="com.neucity.build.vo.SysEventRuleVo">
+        select a.*, c.name as eventSourceName
+        from sys_event_rule a
+        left join sys_classify c on a.event_source = c.code
+        <where>
+            <if test="ruleName != null and ruleName != ''">
+                and a.rule_name like concat('%', #{ruleName}, '%')
+            </if>
+            <if test="eventLevel != null and eventLevel != ''">
+                and a.event_level = #{eventLevel}
+            </if>
+            <if test="eventSource != null and eventSource != ''">
+                and a.event_source = #{eventSource}
+            </if>
+            <if test="actionType != null and actionType != ''">
+                and a.action_type = #{actionType}
+            </if>
+            <if test="status != null and status != ''">
+                and a.status = #{status}
+            </if>
+            <if test="beginTime != null and beginTime != ''">
+                and a.create_time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and a.create_time &lt;= #{endTime}
+            </if>
+        </where>
+        order by a.create_time desc, a.id desc
+    </select>
+
+    <select id="selectEventRuleById" resultType="com.neucity.build.vo.SysEventRuleVo">
+        select a.*, c.name as eventSourceName
+        from sys_event_rule a
+        left join sys_classify c on a.event_source = c.code
+        where a.id = #{id}
+    </select>
+</mapper>

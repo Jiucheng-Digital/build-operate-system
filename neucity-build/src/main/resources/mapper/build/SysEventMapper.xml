@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neucity.build.mapper.SysEventMapper">
+
+
+    <select id="selectEvent" resultType="com.neucity.build.vo.SysEventVo">
+        select a.*, c.name classifyName, b.manufacturer, b.`name` deviceName
+        from sys_event a
+         left join drive_device b on a.device_id = b.id
+         left join sys_classify c on b.classify = c.code
+        <where>
+            <if test="level != null and level != ''">
+                and a.level =#{level}
+            </if>
+            <if test="handleState != null and handleState != ''">
+                and a.handler_state = #{handleState}
+            </if>
+        </where>
+    </select>
+    <select id="selectEventOverview" resultType="com.neucity.build.vo.EventOverviewVo">
+        select
+            (select count(0) count from sys_event where level ='low') as lowNum,
+            (select count(0) count from sys_event where level ='low' and handler_state ='apply') as applyLowNum,
+            (select count(0) count from sys_event where level ='low' and handler_state ='pending') as pendingLowNum,
+            (select count(0) count from sys_event where level ='middle') as middleNum,
+            (select count(0) count from sys_event where level ='middle' and handler_state ='apply') as applyMiddleNum,
+            (select count(0) count from sys_event where level ='middle' and handler_state ='pending') as pendingMiddleNum,
+            (select count(0) count from sys_event where level ='high') as highNum,
+            (select count(0) count from sys_event where level ='high' and handler_state ='apply') as applyHighNum,
+            (select count(0) count from sys_event where level ='high' and handler_state ='pending') as pendingHighNum
+    </select>
+</mapper>

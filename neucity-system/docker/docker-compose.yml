@@ -1,0 +1,27 @@
+services:
+  # 开发环境配置
+  neucity:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: neucity-system
+    container_name: neucity-system
+    ports:
+      - "8086:8086"
+    environment:
+      - JAVA_OPTS=-Xmx1024m -Xms512m -Dfile.encoding=utf-8
+    volumes:
+      # 日志
+      - ./logs:/app/logs/neucity-system:rw
+      # 配置文件目录
+      - ./config:/app/config:rw
+      # 数据文件目录
+      - /home/file:/app/data/file:rw
+      - ./neucity-system.jar:/app/neucity-system.jar:rw
+    networks:
+      - neucity-network
+    restart: unless-stopped
+
+networks:
+  neucity-network:
+    name: neucity-network

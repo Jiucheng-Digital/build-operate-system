@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neucity.build.integration.datacenter.mapper.DataCenterOutboxMapper">
+
+    <select id="selectDue" resultType="com.neucity.build.integration.datacenter.domain.IntegrationOutbox">
+        SELECT current_message.*
+        FROM integration_outbox current_message
+        WHERE ((current_message.status IN ('PENDING', 'RETRY')
+                AND (current_message.next_attempt_at IS NULL OR current_message.next_attempt_at &lt;= #{now}))
+           OR (current_message.status = 'PUBLISHING' AND current_message.claim_until &lt;= #{now}))
+          AND NOT EXISTS (
+            SELECT 1
+            FROM integration_outbox earlier_message
+            WHERE earlier_message.aggregate_type = current_message.aggregate_type
+              AND earlier_message.aggregate_id = current_message.aggregate_id
+              AND earlier_message.id &lt; current_message.id
+              AND earlier_message.status != 'PUBLISHED'
+          )
+        ORDER BY current_message.id
+        LIMIT #{limit}
+    </select>
+
+    <update id="claim">
+        UPDATE integration_outbox
+        SET status = 'PUBLISHING',
+            claim_token = #{token},
+            claim_until = #{claimUntil},
+            attempt_count = attempt_count + 1,
+            update_time = #{now}
+        WHERE id = #{id}
+          AND ((status IN ('PENDING', 'RETRY') AND (next_attempt_at IS NULL OR next_attempt_at &lt;= #{now}))
+            OR (status = 'PUBLISHING' AND claim_until &lt;= #{now}))
+    </update>
+
+    <update id="markPublished">
+        UPDATE integration_outbox
+        SET status = 'PUBLISHED',
+            published_at = #{publishedAt},
+            claim_token = NULL,
+            claim_until = NULL,
+            last_error = NULL,
+            update_time = #{publishedAt}
+        WHERE id = #{id} AND status = 'PUBLISHING' AND claim_token = #{token}
+    </update>
+
+    <update id="markRetry">
+        UPDATE integration_outbox
+        SET status = 'RETRY',
+            next_attempt_at = #{nextAttemptAt},
+            claim_token = NULL,
+            claim_until = NULL,
+            last_error = #{lastError},
+            update_time = #{updateTime}
+        WHERE id = #{id} AND status = 'PUBLISHING' AND claim_token = #{token}
+    </update>
+
+    <delete id="deletePublishedBefore">
+        DELETE FROM integration_outbox
+        WHERE status = 'PUBLISHED' AND published_at &lt; #{before}
+        ORDER BY id
+        LIMIT #{limit}
+    </delete>
+</mapper>

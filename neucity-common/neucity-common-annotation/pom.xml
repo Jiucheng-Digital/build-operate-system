@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.neucity</groupId>
+        <artifactId>neucity-common</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <version>${neucity.common.annotation}</version>
+    <artifactId>neucity-common-annotation</artifactId>
+    <name>cloud-neucity-common-annotation</name>
+    <description>annotation 自定义权限</description>
+    <packaging>jar</packaging>
+
+
+    <dependencies>
+        <!-- Common Security -->
+        <dependency>
+            <groupId>com.neucity</groupId>
+            <artifactId>neucity-common-security</artifactId>
+        </dependency>
+    </dependencies>
+</project>

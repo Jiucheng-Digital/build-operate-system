@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neucity.build.mapper.DriveDeviceMapper">
+    <update id="updateDeviceState">
+        update drive_device
+        set
+            state = #{state},
+            offline_time =
+            CASE
+               WHEN #{status} = 'offline' AND status != 'offline' THEN NOW()
+               WHEN #{status} = 'online' THEN NULL
+               ELSE offline_time
+            END,
+            status =#{status}
+        where drive_id = #{driveId} and serial_number = #{serialNumber}
+    </update>
+
+    <update id="updateDeviceStateByAttribute">
+        update drive_device
+        set
+            state = #{state},
+            offline_time =
+            CASE
+                WHEN #{status} = 'offline' AND status != 'offline' THEN NOW()
+                WHEN #{status} = 'online' THEN NULL
+                ELSE offline_time
+            END,
+            status =#{status}
+        where drive_id = #{driveId} and attribute1 = #{attribute1}
+    </update>
+
+
+    <select id="selectDriveDevice" resultType="com.neucity.build.vo.DriveDeviceVo">
+        select *, b.name as classifyName from drive_device a
+        left join sys_classify b on a.classify = b.code
+        <where>
+            <if test="driveId != null">
+                and drive_id = #{driveId}
+            </if>
+            <if test="classify != null">
+                and classify = #{classify}
+            </if>
+            <if test="manufacturer != null">
+                and manufacturer = #{manufacturer}
+            </if>
+            <if test="name != null">
+                and a.`name` in
+                <foreach item="item" index="index" collection="name" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="selectDeviceOverview" resultType="com.neucity.build.vo.DeviceOverviewVo">
+        SELECT
+            (select count(0) from drive_device where 1= 1
+                <if test="classify != null"> and classify = #{classify} </if>
+            ) as totalNum,
+            (select count(0) from drive_device where status ='online'
+                <if test="classify != null"> and classify = #{classify} </if>
+            ) as onlineNum,
+            (select count(0) from drive_device where status ='offline'
+                <if test="classify != null"> and classify = #{classify} </if>
+            ) as offlineNum,
+            (SELECT ROUND(SUM(TIMESTAMPDIFF(SECOND, offline_time, NOW()) / 3600), 2) AS total_offline_hours
+                FROM drive_device WHERE offline_time IS NOT NULL
+                <if test="classify != null"> and classify = #{classify} </if>
+            ) as offTime
+    </select>
+    <select id="selectOnlineDevice" resultType="com.neucity.build.vo.DriveDeviceVo">
+        select a.*, b.url
+        from drive_device a
+        left join drive_info b on a.drive_id = b.id
+        where a.status = 'online' and b.`status` = 'install_success'
+        <if test="classify != null">
+            and a.classify = #{classify}
+        </if>
+    </select>
+    <select id="selectInstalledDevice" resultType="com.neucity.build.vo.DriveDeviceVo">
+        select a.*, b.url
+        from drive_device a
+        left join drive_info b on a.drive_id = b.id
+        where b.`status` = 'install_success'
+        <if test="classify != null">
+            and a.classify = #{classify}
+        </if>
+        <if test="manufacturer != null">
+            and a.manufacturer = #{manufacturer}
+        </if>
+    </select>
+    <select id="selectOfflineDevices" resultType="com.neucity.build.domain.DriveDevice">
+        SELECT *
+        FROM drive_device
+        WHERE status = 'offline' and drive_id =#{eventSource} and  offline_time IS NOT NULL
+        <![CDATA[
+          AND offline_time < NOW() - INTERVAL #{offlineTime} MINUTE
+        ]]>
+        and id not in
+        (
+            select device_id from sys_event where handler_state != 'completed' and event_id = 'device.disconnect.event'
+        )
+    </select>
+    <select id="selectDriveDeviceById" resultType="com.neucity.build.vo.DriveDeviceVo">
+        select a.*, b.url
+        from drive_device a
+        left join drive_info b on a.drive_id = b.id
+        where a.status = 'online' and b.`status` = 'install_success' and a.id =#{id}
+    </select>
+</mapper>

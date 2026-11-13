@@ -1,0 +1,33 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: neucity-gateway
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        metadata:
+          management.port: ${server.port}
+          management.context-path: /actuator
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        file-extension: yml
+        shared-configs:
+        - data-id: application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+          group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+        group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+    sentinel:
+      eager: false
+      transport:
+        dashboard: ${SENTINEL_DASHBOARD:127.0.0.1:8718}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized

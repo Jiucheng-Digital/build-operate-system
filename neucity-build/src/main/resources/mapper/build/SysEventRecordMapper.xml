@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neucity.build.mapper.SysEventRecordMapper">
+
+    <insert id="insertBatchIgnore">
+        INSERT IGNORE INTO sys_event_record
+        (drive_id, device_id, event_id, event_name, event_time, level, extend,
+         handler_state, manufacturer, classify, source_event_key, promoted,
+         create_by, create_time, update_by, update_time)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.driveId}, #{item.deviceId}, #{item.eventId}, #{item.eventName}, #{item.eventTime},
+             #{item.level}, #{item.extend}, #{item.handlerState}, #{item.manufacturer}, #{item.classify},
+             #{item.sourceEventKey}, 0, #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime})
+        </foreach>
+    </insert>
+
+    <update id="markPromoted">
+        UPDATE sys_event_record
+        SET promoted = 1, promoted_time = #{promotedTime}, update_time = #{promotedTime}
+        WHERE promoted = 0 AND id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

@@ -1,0 +1,15 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="drv-bg" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9AA7B8"/>
+      <stop offset="1" stop-color="#6B7A8F"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#drv-bg)"/>
+  <rect x="16" y="18" width="32" height="12" rx="2.5" fill="#fff"/>
+  <rect x="16" y="34" width="32" height="12" rx="2.5" fill="#fff"/>
+  <circle cx="22" cy="24" r="2.2" fill="#6B7A8F"/>
+  <circle cx="22" cy="40" r="2.2" fill="#6B7A8F"/>
+  <rect x="28" y="22.5" width="14" height="3" rx="1.5" fill="#C3CCD8"/>
+  <rect x="28" y="38.5" width="14" height="3" rx="1.5" fill="#C3CCD8"/>
+</svg>

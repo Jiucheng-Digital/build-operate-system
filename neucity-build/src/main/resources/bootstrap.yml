@@ -1,0 +1,100 @@
+# Tomcat
+server:
+  port: 6006
+  servlet:
+    context-path: /api/build
+
+# Spring
+spring:
+  application:
+    # 应用名称
+    name: neucity-build
+  profiles:
+    # 环境配置
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        # 核心：为当前服务配置专属的metadata，monitor会自动读取
+        metadata:
+          management.port: ${server.port}  # 服务A的HTTP端口
+          management.context-path: /actuator
+
+      config:
+        # 配置中心地址
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        # 配置文件格式
+        file-extension: yml
+        # 共享配置
+        shared-configs:
+          - data-id: application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+            group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+        group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:192.168.0.230:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+# 健康检查端点配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info  # 暴露健康检查端点
+  endpoint:
+    health:
+      show-details: always
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+    # 可选：设置 QOS 端口，用于运维命令
+    qos-port: 22222
+    qos-enable: true
+  protocol:
+    name: dubbo  # 使用的协议
+    port: 20890     # -1 表示从默认端口开始随机分配，也可指定固定端口如 20880
+  registry:
+    address: nacos://${NACOS_SERVER_ADDR:127.0.0.1:8848}
+  scan:
+    base-packages: com.neucity.build # 指定 Dubbo 服务实现类的扫描包
+  consumer:
+    #    filter: dubboProviderContextFilter,dubboConsumerContextFilter
+    check: false  # 启动时不检查服务提供者是否可用
+    timeout: 10000
+  provider:
+    timeout: 3000
+    retries: 0
+ai:
+  stream:
+    callback: http://192.168.0.230:6006/api/build/ai/face/callback
+    api-url: http://192.168.0.230:18304
+    face-group-id: 64f40219-917a-4cbe-82ec-f0111575d9b5
+
+monitor:
+  url: https://10.8.8.3:30080/monitor
+
+environmental:
+  monitoring:
+    url: http://jcsz-envget01.local/api/data
+    enable: true
+
+# 数据中心实时同步。生产环境建议放入 Nacos 的 neucity-build 配置并通过配置刷新切换。
+# 关闭只暂停 Kafka 投递，业务事务仍会写 integration_outbox；重新开启后自动补发。
+data-center:
+  sync:
+    enabled: true
+    source-code: NEUCITY_BUILD
+    device-topic: data-center.device-events.v1
+    alarm-topic: data-center.alarm-events.v1
+    batch-size: 100
+    publish-delay-ms: 60000
+    lease-seconds: 180
+    send-timeout-seconds: 130
+    retry-base-seconds: 30
+    retry-max-seconds: 3600
+    published-retention-days: 30
+    cleanup-cron: "0 15 * * * ?"

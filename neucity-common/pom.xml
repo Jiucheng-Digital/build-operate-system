@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.neucity</groupId>
+        <artifactId>neucity-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../neucity-parent/pom.xml</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>neucity-common</artifactId>
+    <name>Cloud :: neucity-common :: ${project.version}</name>
+    <description>neucity-common通用模块</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>neucity-common-annotation</module>
+        <module>neucity-common-core</module>
+        <module>neucity-common-datasource</module>
+        <module>neucity-common-dubbo</module>
+        <module>neucity-common-file</module>
+        <module>neucity-common-mybatisplus</module>
+        <module>neucity-common-redis</module>
+        <module>neucity-common-security</module>
+        <module>neucity-common-swagger</module>
+    </modules>
+
+</project>

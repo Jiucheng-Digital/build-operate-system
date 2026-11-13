@@ -1,0 +1,25 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brand-grad" x1="40" y1="30" x2="160" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7B3FD3"/>
+      <stop offset="1" stop-color="#4B1E9E"/>
+    </linearGradient>
+  </defs>
+  <!-- O：开口圆环 -->
+  <path
+    d="M100 38
+       a62 62 0 1 0 44 18"
+    fill="none"
+    stroke="url(#brand-grad)"
+    stroke-width="26"
+    stroke-linecap="round"/>
+  <!-- U：内部竖钩 -->
+  <path
+    d="M100 84 V120 a18 18 0 0 0 36 0 V70"
+    fill="none"
+    stroke="url(#brand-grad)"
+    stroke-width="26"
+    stroke-linecap="round"/>
+  <!-- 中部短横 -->
+  <rect x="60" y="92" width="40" height="22" rx="11" fill="url(#brand-grad)"/>
+</svg>

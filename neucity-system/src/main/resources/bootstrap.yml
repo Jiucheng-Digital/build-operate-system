@@ -1,0 +1,56 @@
+server:
+  port: 6001
+  servlet:
+    context-path: /api/system
+spring:
+  application:
+    name: neucity-system
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 205MB
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        metadata:
+          management.port: ${server.port}
+          management.context-path: /actuator
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        file-extension: yml
+        shared-configs:
+        - data-id: application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+          group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+        group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+dubbo:
+  application:
+    name: ${spring.application.name}
+    qos-port: 22221
+    qos-enable: true
+  protocol:
+    name: dubbo
+    port: 20889
+  registry:
+    address: nacos://${NACOS_SERVER_ADDR:127.0.0.1:8848}
+  scan:
+    base-packages: com.neucity.system
+  provider:
+    timeout: 3000
+    retries: 0
+file:
+  storage:
+    type: ${FILE_STORAGE_TYPE:local}
+    url: ${FILE_STORAGE_URL:http://localhost:6001/api/system}
+    local:
+      base-path: ${FILE_STORAGE_PATH:./data/files}

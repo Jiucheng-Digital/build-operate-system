@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neucity.build.mapper.BuildSpaceDocumentMapper">
+    <resultMap id="document" type="com.neucity.build.domain.BuildSpaceDocument">
+        <id property="spaceId" column="space_id"/>
+        <result property="projectId" column="project_id"/>
+        <result property="name" column="name"/>
+        <result property="draftJson" column="draft_json"/>
+        <result property="revision" column="revision"/>
+        <result property="publishedJson" column="published_json"/>
+        <result property="publishedRevision" column="published_revision"/>
+        <result property="publishedAt" column="published_at"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="draftColumns">
+        space_id, project_id, name, draft_json, revision, published_revision, published_at,
+        create_by, create_time, update_by, update_time
+    </sql>
+
+    <select id="selectDraft" resultMap="document">
+        SELECT <include refid="draftColumns"/> FROM build_space_document WHERE project_id = #{projectId}
+    </select>
+
+    <select id="selectSpaceId" resultType="java.lang.String">
+        SELECT space_id FROM build_space_document WHERE project_id = #{projectId}
+    </select>
+
+    <select id="selectDraftForUpdate" resultMap="document">
+        SELECT <include refid="draftColumns"/> FROM build_space_document WHERE project_id = #{projectId} FOR UPDATE
+    </select>
+
+    <select id="selectPublished" resultMap="document">
+        SELECT space_id, project_id, published_json, published_revision, published_at
+        FROM build_space_document WHERE project_id = #{projectId} AND published_json IS NOT NULL
+    </select>
+
+    <insert id="insert">
+        INSERT INTO build_space_document
+            (space_id, project_id, name, draft_json, revision, create_by, create_time, update_by, update_time)
+        VALUES (#{spaceId}, #{projectId}, #{name}, #{draftJson}, 1,
+                #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
+    </insert>
+
+    <update id="updateDraft">
+        UPDATE build_space_document
+        SET name = #{document.name}, draft_json = #{document.draftJson}, revision = revision + 1,
+            update_by = #{document.updateBy}, update_time = #{document.updateTime}
+        WHERE project_id = #{document.projectId} AND space_id = #{document.spaceId} AND revision = #{baseRevision}
+    </update>
+
+    <update id="publish">
+        UPDATE build_space_document
+        SET draft_json = #{snapshotJson}, published_json = #{snapshotJson},
+            revision = #{baseRevision} + 1, published_revision = #{baseRevision} + 1, published_at = #{publishedAt},
+            update_by = #{username}, update_time = #{publishedAt}
+        WHERE project_id = #{projectId} AND revision = #{baseRevision}
+    </update>
+</mapper>

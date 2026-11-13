@@ -1,0 +1,2 @@
+com.neucity.common.annotation.aspect.DataScopeAspect
+com.neucity.common.annotation.aspect.LogAspect

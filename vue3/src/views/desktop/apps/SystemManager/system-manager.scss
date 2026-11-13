@@ -1,0 +1,98 @@
+.system-manager {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  background: #f5f8fc;
+
+  &__nav {
+    flex: 0 0 180px;
+    padding: 12px 10px;
+    overflow: auto;
+    border-right: 1px solid #e0e8f2;
+    background: #fff;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 10px 19px;
+    color: #1c2f49;
+    font-size: 15px;
+    .el-icon { color: #1268f3; font-size: 19px; }
+  }
+
+  &__link, &__group {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    min-height: 42px;
+    margin-bottom: 5px;
+    padding: 8px 10px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: #60748d;
+    font: inherit;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    .el-icon { font-size: 16px; }
+    &:hover { background: #f3f8ff; color: #1268f3; }
+    &:focus-visible { outline: 3px solid #cfe1fb; }
+    &.is-active { border-color: #cfe1fb; background: #edf5ff; color: #1268f3; box-shadow: inset 3px 0 #1268f3; font-weight: 650; }
+  }
+  &__arrow { margin-left: auto; transition: transform .18s; &.is-expanded { transform: rotate(90deg); } }
+  &__children { padding-left: 13px; }
+  &__main { display: flex; flex: 1; flex-direction: column; min-width: 0; min-height: 0; padding: 14px 16px; }
+  &__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; h2 { margin: 5px 0 0; color: #1c2f49; font-size: 18px; font-weight: 700; } }
+  &__eyebrow { color: #899aaf; font-size: 12px; }
+  &__content {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    border: 1px solid #dfe7f1;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 6px 20px rgba(38, 76, 123, .045);
+    > .app-container { padding: 16px; }
+    .el-form--inline { display: flex; flex-wrap: wrap; gap: 0 16px; padding-bottom: 4px; margin-bottom: 14px; border-bottom: 1px solid #edf1f6; }
+    .el-form--inline .el-form-item { margin-right: 0; margin-bottom: 14px; }
+    .el-row.mb8 { row-gap: 8px; margin-bottom: 14px; }
+    .el-table { min-width: 700px; }
+    .tree-sidebar-manage-wrap { min-height: 100%; align-items: stretch; overflow: visible; }
+    .tree-sidebar-content { overflow: visible; }
+    .tree-sidebar-content .content-inner { padding: 16px; overflow: visible; }
+    .tree-sidebar { min-height: 100%; border-color: #e0e8f2; }
+    .el-tree { --el-tree-node-hover-bg-color: #f3f8ff; color: #4f647e; }
+    .el-tree-node__content { min-height: 36px; border-radius: 7px; }
+    .el-card { border-color: #e2e9f2; border-radius: 10px; box-shadow: none; }
+  }
+  .el-button--primary.is-plain {
+    border-color: #cfe1fb !important;
+    background: #edf5ff !important;
+    color: #1268f3 !important;
+    box-shadow: none !important;
+    &:hover { border-color: #1268f3 !important; background: #1268f3 !important; color: #fff !important; }
+  }
+}
+
+@media (max-width: 1100px) {
+  .system-manager__nav { flex-basis: 158px; padding-inline: 7px; }
+  .system-manager__main { padding: 12px; }
+  .system-manager__content .tree-sidebar-manage-wrap { flex-direction: column; }
+  .system-manager__content .tree-sidebar { width: 100% !important; max-height: 260px; }
+}
+
+body.desktop-control-surface .el-dialog { max-width: calc(100vw - 32px); }
+
+body.desktop-control-surface .el-dialog.system-management-dialog {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 48px);
+  margin: 24px auto !important;
+  .el-dialog__body { min-height: 0; overflow: auto; }
+  .el-dialog__header, .el-dialog__footer { flex-shrink: 0; }
+}

@@ -1,0 +1,2 @@
+dubboProviderContextFilter=com.neucity.common.dubbo.filter.DubboProviderContextFilter
+dubboConsumerContextFilter=com.neucity.common.dubbo.filter.DubboConsumerContextFilter

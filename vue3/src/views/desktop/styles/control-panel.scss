@@ -1,0 +1,405 @@
+body.desktop-control-surface {
+  --el-color-primary: #1268f3;
+  --el-color-success: #16a779;
+  --el-color-warning: #df8a28;
+  --el-color-danger: #dc4c47;
+  --el-border-color: #dce5ef;
+  --el-border-color-light: #e6edf5;
+  --el-fill-color-light: #f4f7fb;
+  --el-text-color-primary: #1b2c45;
+  --el-text-color-regular: #4e627b;
+  --el-border-radius-base: 8px;
+  margin: 0;
+  overflow: hidden;
+  background: #f1f5fa;
+  color: #1b2c45;
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  font-size: 14px;
+}
+
+.desktop-control-surface,
+.desktop-control-surface * {
+  box-sizing: border-box;
+}
+
+.desktop-control-surface button,
+.desktop-control-surface input,
+.desktop-control-surface textarea,
+.desktop-control-surface select {
+  font-family: inherit;
+}
+
+/* All desktop modules share one operation-workspace grammar. */
+.desktop-control-surface .app-window :is(.dm, .dc, .eh, .rm, .dt, .reg) {
+  min-width: 0;
+  min-height: 0;
+  background: #f5f8fc !important;
+}
+
+.desktop-control-surface .app-window :is(.dm__nav, .dc__nav, .eh__nav, .rm__nav, .dt__nav) {
+  flex: 0 0 180px !important;
+  width: 180px !important;
+  padding: 12px 10px !important;
+  overflow: auto;
+  border-right: 1px solid #e0e8f2 !important;
+  background: #fff !important;
+}
+
+.desktop-control-surface .app-window .reg__tree {
+  flex: 0 0 clamp(290px, 22vw, 360px) !important;
+  width: clamp(290px, 22vw, 360px) !important;
+  padding: 12px 14px !important;
+  overflow: auto;
+  border-right: 1px solid #e0e8f2 !important;
+  background: #fff !important;
+}
+
+.desktop-control-surface .app-window :is(.dm__nav-item, .dc__nav-item, .eh__nav-item, .rm__nav-item, .dt__nav-item) {
+  width: 100%;
+  min-height: 40px !important;
+  height: auto !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 5px !important;
+  padding: 8px 10px !important;
+  border: 1px solid transparent;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: #60748d !important;
+  font-family: inherit;
+  font-size: 14px !important;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.desktop-control-surface .app-window :is(.dm__nav-item, .dc__nav-item, .eh__nav-item, .rm__nav-item, .dt__nav-item):hover {
+  border-color: #dce9fa;
+  background: #f3f8ff !important;
+  color: #1268f3 !important;
+}
+
+.desktop-control-surface .app-window :is(.dm__nav-item, .dc__nav-item, .eh__nav-item, .rm__nav-item, .dt__nav-item).is-active {
+  border-color: #cfe1fb;
+  background: #edf5ff !important;
+  color: #1268f3 !important;
+  box-shadow: inset 3px 0 #1268f3;
+  font-weight: 650;
+}
+
+.desktop-control-surface .app-window :is(.dm__nav-icon, .dc__nav-icon, .eh__nav-icon, .rm__nav-icon, .dt__nav-icon) {
+  color: currentColor !important;
+  font-size: 16px !important;
+}
+
+.desktop-control-surface .app-window .dc__nav-group {
+  margin: 10px 7px 7px !important;
+  color: #99a7b7 !important;
+  font-size: 12px !important;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.desktop-control-surface .app-window :is(.dm__main, .dc__main, .eh__main, .rm__main, .dt__main, .reg__main) {
+  min-width: 0;
+  min-height: 0;
+  padding: 14px 16px !important;
+  overflow: hidden;
+  background: #f5f8fc !important;
+}
+
+.desktop-control-surface .app-window :is(.dm__head, .dc__head, .eh__head, .rm__head, .dt__head, .reg-detail__head) {
+  min-height: 44px;
+  margin-bottom: 10px !important;
+}
+
+.desktop-control-surface .app-window :is(.dm__title, .dc__title, .eh__title, .rm__title, .dt__title, .reg-detail__title) {
+  margin: 0 !important;
+  color: #1c2f49 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em;
+}
+
+.desktop-control-surface .app-window :is(.dm__panel, .dc__panel, .eh__panel, .rm-card, .dt__body, .dm__guide) {
+  border: 1px solid #dfe7f1 !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  box-shadow: 0 6px 20px rgba(38, 76, 123, 0.045) !important;
+}
+
+.desktop-control-surface .app-window :is(.dm__panel, .dc__panel, .eh__panel) {
+  padding: 12px 14px !important;
+}
+
+.desktop-control-surface .app-window :is(.dm__panel-head, .dc__panel-head, .eh__panel-head) {
+  min-height: 38px;
+  margin-bottom: 9px !important;
+}
+
+.desktop-control-surface .app-window :is(.dm__panel-title, .dc__panel-title, .eh__panel-title) {
+  color: #31465f !important;
+  font-size: 15px !important;
+  font-weight: 650 !important;
+}
+
+/* KPI blocks inside Device and Event modules. */
+.desktop-control-surface .app-window :is(.dc__cards, .eh__cards) {
+  gap: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.desktop-control-surface .app-window :is(.dc-card, .eh-card) {
+  min-height: 82px !important;
+  padding: 12px 14px !important;
+  border: 1px solid #dfe7f1 !important;
+  border-radius: 11px !important;
+  background: #fff !important;
+  box-shadow: 0 5px 16px rgba(38, 76, 123, 0.04) !important;
+}
+
+.desktop-control-surface .app-window :is(.dc-card__label, .eh-card__label, .eh-card__sub, .dc-card__sub) {
+  color: #7b8da3 !important;
+}
+
+.desktop-control-surface .app-window :is(.dc-card__num, .eh-card__num) {
+  color: #1a2d46 !important;
+  font-size: 24px !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Resource manager and Data center cards. */
+.desktop-control-surface .app-window .rm__cards {
+  gap: 10px !important;
+}
+
+.desktop-control-surface .app-window .rm-card {
+  padding: 14px !important;
+}
+
+.desktop-control-surface .app-window .rm-bar {
+  height: 6px !important;
+  background: #e8eef6 !important;
+}
+
+.desktop-control-surface .app-window .rm-bar__fill {
+  background: linear-gradient(90deg, #69a8ff, #1268f3) !important;
+}
+
+.desktop-control-surface .app-window .dt__body {
+  padding: 10px !important;
+  overflow: auto !important;
+}
+
+.desktop-control-surface .app-window .dt__cards {
+  gap: 10px !important;
+}
+
+.desktop-control-surface .app-window .dt-card {
+  padding: 13px !important;
+  border: 1px solid #dfe7f1 !important;
+  border-radius: 11px !important;
+  background: #fff !important;
+  box-shadow: 0 5px 16px rgba(38, 76, 123, 0.04) !important;
+}
+
+.desktop-control-surface .app-window .dt-card__icon {
+  background: #edf5ff !important;
+  color: #1268f3 !important;
+}
+
+.desktop-control-surface .app-window .dt-card__history {
+  color: #1268f3 !important;
+}
+
+/* Registry tree becomes the module explorer rail. */
+.desktop-control-surface .app-window .reg__tree .el-tree {
+  background: transparent;
+  color: #4f647e;
+  font-size: 15px;
+  width: 100%;
+}
+
+.desktop-control-surface .app-window .reg__tree .el-tree-node__content {
+  min-height: 42px;
+  height: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 2px;
+  border-radius: 7px;
+}
+
+.desktop-control-surface .app-window .reg__tree .el-tree-node__content:hover {
+  background: #f2f7fe;
+}
+
+.desktop-control-surface .app-window .reg__tree .is-current > .el-tree-node__content {
+  background: #eaf3ff;
+  color: #1268f3;
+}
+
+/* Element Plus controls inside every module. */
+.desktop-control-surface .app-window .el-button {
+  min-height: 38px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.desktop-control-surface .app-window .el-button--primary:not(.is-link) {
+  border-color: #1268f3;
+  background: #1268f3;
+  box-shadow: 0 5px 12px rgba(18, 104, 243, 0.16);
+}
+
+.desktop-control-surface .app-window :is(.el-input__wrapper, .el-select__wrapper) {
+  min-height: 38px;
+  border-radius: 8px;
+  background: #fbfdff;
+  box-shadow: 0 0 0 1px #dce5ef inset;
+}
+
+.desktop-control-surface .app-window :is(.el-input__inner, .el-select__selected-item, .el-pagination) {
+  font-size: 14px;
+}
+
+.desktop-control-surface .app-window :is(.el-input__wrapper, .el-select__wrapper).is-focus,
+.desktop-control-surface .app-window .el-input__wrapper:focus-within {
+  box-shadow: 0 0 0 1px #76a9f7 inset, 0 0 0 3px rgba(18, 104, 243, 0.09) !important;
+}
+
+.desktop-control-surface .app-window .el-table {
+  --el-table-border-color: #e4ebf3;
+  --el-table-header-bg-color: #f4f7fb;
+  --el-table-row-hover-bg-color: #f4f8ff;
+  --el-table-current-row-bg-color: #edf5ff;
+  width: 100%;
+  border: 1px solid #e2e9f2;
+  border-radius: 9px;
+  color: #41566f;
+  font-size: 14px !important;
+}
+
+.desktop-control-surface .app-window .el-table th.el-table__cell {
+  height: 46px;
+  padding: 7px 0;
+  background: #f4f7fb !important;
+  color: #50657d;
+  font-size: 14px !important;
+  font-weight: 650;
+}
+
+.desktop-control-surface .app-window .el-table td.el-table__cell {
+  height: 48px;
+  padding: 6px 0;
+  font-size: 14px !important;
+}
+
+.desktop-control-surface .app-window .el-table .cell {
+  font-size: 14px !important;
+  line-height: 1.45;
+}
+
+.desktop-control-surface .app-window .el-tag {
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.desktop-control-surface .app-window .pagination-container {
+  height: 44px !important;
+  margin: 0 !important;
+  padding: 7px 0 0 !important;
+  background: transparent !important;
+}
+
+.desktop-control-surface .app-window .el-loading-mask {
+  background: rgba(250, 252, 255, 0.82);
+  backdrop-filter: blur(2px);
+}
+
+/* Every teleported dialog follows the same review-and-control surface. */
+.desktop-control-surface .el-overlay {
+  background: rgba(31, 48, 71, 0.28);
+  backdrop-filter: blur(3px);
+}
+
+.desktop-control-surface .el-dialog:not(.mon-dialog) {
+  overflow: hidden;
+  border: 1px solid #d9e3ee;
+  border-radius: 16px !important;
+  background: #fff;
+  box-shadow: 0 28px 80px rgba(28, 55, 89, 0.22) !important;
+}
+
+.desktop-control-surface .el-dialog:not(.mon-dialog) .el-dialog__header {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  margin: 0 !important;
+  padding: 0 18px !important;
+  border-bottom: 1px solid #e5ebf3;
+  background: linear-gradient(90deg, #fff, #f7faff);
+}
+
+.desktop-control-surface .el-dialog:not(.mon-dialog) .el-dialog__title {
+  color: #1d3049;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.desktop-control-surface .el-dialog:not(.mon-dialog) .el-dialog__body {
+  padding: 16px 18px !important;
+  color: #40556e;
+  font-size: 14px;
+}
+
+.desktop-control-surface .el-dialog:not(.mon-dialog) .el-dialog__footer {
+  padding: 12px 18px 16px !important;
+  border-top: 1px solid #edf1f6;
+}
+
+.desktop-control-surface .el-dialog :is(.el-input__wrapper, .el-select__wrapper) {
+  min-height: 40px;
+  border-radius: 8px;
+  background: #fbfdff;
+}
+
+.desktop-control-surface .el-dialog .el-button {
+  min-height: 38px;
+  border-radius: 8px;
+}
+
+.desktop-control-surface .el-message-box {
+  overflow: hidden;
+  border: 1px solid #d9e3ee;
+  border-radius: 14px;
+  box-shadow: 0 24px 70px rgba(28, 55, 89, 0.2);
+}
+
+@media (max-width: 900px) {
+  .desktop-control-surface .app-window :is(.dm__nav, .dc__nav, .eh__nav, .rm__nav, .dt__nav) {
+    flex-basis: 150px !important;
+    width: 150px !important;
+  }
+
+  .desktop-control-surface .app-window .reg__tree {
+    flex-basis: 260px !important;
+    width: 260px !important;
+  }
+
+  .desktop-control-surface .app-window :is(.dm__main, .dc__main, .eh__main, .rm__main, .dt__main, .reg__main) {
+    padding: 10px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desktop-control-surface *,
+  .desktop-control-surface *::before,
+  .desktop-control-surface *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

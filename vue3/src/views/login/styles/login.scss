@@ -1,0 +1,223 @@
+/* 登录页 —— 粒子渐变背景 + 锁屏毛玻璃卡片 */
+.login-page {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(88, 128, 255, 0.32), transparent 28%),
+    radial-gradient(circle at 82% 22%, rgba(118, 75, 162, 0.28), transparent 30%),
+    linear-gradient(135deg, #0f0c29, #302b63 48%, #24243e);
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+.particle-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.login-shell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(360px, calc(100vw - 32px));
+}
+
+/* 时钟 */
+.login-time {
+  margin-bottom: 8px;
+  color: #fff;
+  font-size: 60px;
+  font-weight: 200;
+  line-height: 1;
+  letter-spacing: 4px;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+  font-variant-numeric: tabular-nums;
+}
+
+.login-date {
+  margin-bottom: 34px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+/* 锁屏卡片 */
+.lock-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 36px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: padding 0.3s ease;
+}
+
+.lock-card__avatar {
+  width: 88px;
+  height: 88px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.lock-card__avatar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.avatar-icon {
+  width: 54px;
+  height: 54px;
+}
+
+.lock-card__name {
+  margin: 16px 0 4px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.lock-card__form {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.lock-card__form :deep(.el-form-item) {
+  margin-bottom: 18px;
+}
+
+.lock-card__form :deep(.el-input__wrapper) {
+  min-height: 48px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.lock-card__form :deep(.el-input__wrapper.is-focus) {
+  background: rgba(255, 255, 255, 0.13);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.62) inset;
+}
+
+.lock-card__form :deep(.el-input__inner) {
+  color: #fff;
+}
+
+.lock-card__form :deep(.el-input__inner::placeholder) {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.lock-card__form :deep(.el-input__prefix),
+.lock-card__form :deep(.el-input__suffix) {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.lock-card__form :deep(.el-form-item__error) {
+  padding-left: 18px;
+  color: #ff8f8f;
+}
+
+.input-icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* 验证码：输入框 + 图片并排 */
+.captcha-item :deep(.el-form-item__content) {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.captcha-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.captcha-img {
+  flex: 0 0 110px;
+  width: 110px;
+  height: 48px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.captcha-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remember-me {
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.remember-me :deep(.el-checkbox__label) {
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.lock-card__submit {
+  width: 100%;
+  height: 48px;
+  margin-top: 22px;
+  border: 0;
+  border-radius: 50px;
+  color: #fff;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  box-shadow: 0 16px 28px rgba(102, 126, 234, 0.28);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.lock-card__submit:hover,
+.lock-card__submit:focus {
+  color: #fff;
+  background: linear-gradient(135deg, #7489f0, #8458ac);
+}
+
+.login-footer {
+  position: fixed;
+  right: 24px;
+  bottom: 18px;
+  left: 24px;
+  z-index: 1;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.42);
+  font-family: Arial;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 640px) {
+  .login-time {
+    font-size: 44px;
+  }
+
+  .login-date {
+    margin-bottom: 24px;
+  }
+
+  .lock-card {
+    padding: 28px 22px 24px;
+  }
+}
