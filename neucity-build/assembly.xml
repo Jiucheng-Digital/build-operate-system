@@ -1,0 +1,44 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.2.0
+                              http://maven.apache.org/xsd/assembly-2.2.0.xsd">
+    <id>package</id>
+    <formats>
+        <format>dir</format>
+        <format>zip</format>
+        <!-- <format>tar.gz</format> -->
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+
+    <fileSets>
+        <fileSet>
+            <directory>${project.basedir}/target/classes</directory>
+            <includes>
+                <include>*.yml</include>
+            </includes>
+            <filtered>true</filtered>
+            <outputDirectory>config</outputDirectory>
+        </fileSet>
+
+        <!-- Docker 文件 -->
+        <fileSet>
+            <directory>${project.basedir}/docker</directory>
+            <outputDirectory>/</outputDirectory>
+            <fileMode>0755</fileMode>
+            <lineEnding>unix</lineEnding>
+        </fileSet>
+
+        <!-- 主应用 JAR -->
+        <fileSet>
+            <directory>${project.basedir}/target</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>${project.build.finalName}.jar</include>
+            </includes>
+            <excludes>
+                <exclude>*.zip</exclude>
+                <exclude>*.tar.gz</exclude>
+            </excludes>
+        </fileSet>
+    </fileSets>
+</assembly>
