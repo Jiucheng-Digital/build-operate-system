@@ -3,3 +3,10 @@
 .codex/
 .idea/
 *.iml
+/vue3/.vite/deps/_metadata.json
+/vue3/.vite/deps/package.json
+/vue3/bin/**
+/vue3/docs/**
+/doc/**
+/neucity-common/neucity-common-file/docker/minio/docker-compose.yml
+/neucity-common/neucity-common-file/docker/minio/README.md
