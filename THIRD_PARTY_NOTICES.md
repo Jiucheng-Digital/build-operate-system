@@ -1,3 +1,11 @@
+# 第三方版权与许可声明
+
+本项目整体发行及原创代码采用 Apache License 2.0，详见根目录的 [LICENSE](LICENSE)。第三方代码、依赖及资源仍适用各自的原有许可证。
+
+## RuoYi 前端
+
+`vue3/` 目录包含基于 RuoYi 的前端代码。以下完整保留原 `vue3/LICENSE` 中的 MIT 版权与许可声明；分发相关代码或其实质性部分时，应一并保留此声明。
+
 The MIT License (MIT)
 
 Copyright (c) 2018 RuoYi

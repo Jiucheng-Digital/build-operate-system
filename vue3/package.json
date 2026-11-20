@@ -3,7 +3,7 @@
   "version": "3.9.2",
   "description": "若依管理系统",
   "author": "若依",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
